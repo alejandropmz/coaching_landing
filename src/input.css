@@ -1,2 +1,15 @@
 @import "tailwindcss";
 @source "../index.html";
+
+@theme {
+  /* ===== GILDED NOIR COLOR PALETTE ===== */
+  --color-cream: #FEF8F3;
+  --color-charcoal: #1D1B19;
+  --color-gold: #C5A059;
+  --color-deep-gold: #775A19;
+  --color-divider: #32302D;
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-bodoni: 'Bodoni Moda', serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
