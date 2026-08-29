@@ -31,7 +31,7 @@
     </a>
 
     <!-- Desktop Nav Links -->
-    <nav class="hidden md:flex items-center space-x-8 lg:space-x-10">
+    <nav aria-label="Navegación principal" class="hidden md:flex items-center space-x-8 lg:space-x-10">
       <a href="#servicios"
         class="text-cream/75 hover:text-gold text-xs tracking-[0.15em] uppercase font-semibold transition-colors duration-300">Servicios</a>
       <a href="#sobre-mi"
@@ -72,7 +72,7 @@
       </svg>
     </button>
 
-    <nav class="flex flex-col items-center space-y-8">
+    <nav aria-label="Navegación móvil" class="flex flex-col items-center space-y-8">
       <a href="#servicios"
         class="text-cream/80 hover:text-gold text-lg tracking-[0.15em] uppercase font-semibold transition-colors duration-300"
         onclick="document.getElementById('mobile-drawer').classList.toggle('translate-x-full');">Servicios</a>
@@ -90,6 +90,8 @@
       Agendar sesión
     </a>
   </div>
+
+  <main>
   <!-- ============================================================ -->
   <!--  HERO SECTION — FULL BACKGROUND IMAGE                        -->
   <!-- ============================================================ -->
@@ -611,6 +613,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <!-- ============================================================ -->
   <!--  FOOTER                                                       -->
