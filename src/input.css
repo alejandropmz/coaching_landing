@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @source "../index.html";
+@source "../assets/js/main.js";
 
 @theme {
   /* ===== GILDED NOIR COLOR PALETTE ===== */
