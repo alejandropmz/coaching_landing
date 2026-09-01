@@ -1,0 +1,129 @@
+{
+    "quiz": {
+        "title": "Descubre tu Arquetipo de Liderazgo",
+        "questions": [
+            {
+                "id": 1,
+                "question": "¿Cómo pasas la mayor parte de tu semana laboral actual?",
+                "options": [
+                    {
+                        "text": "Planificando la estrategia a largo plazo, buscando alianzas y diseñando el futuro de la empresa.",
+                        "archetype": "visionario",
+                        "points": 10
+                    },
+                    {
+                        "text": "Resolviendo cuellos de botella operativos, aprobando procesos y apagando incendios diarios.",
+                        "archetype": "operativo",
+                        "points": 10
+                    },
+                    {
+                        "text": "Reunido con mi equipo, destrabando conflictos humanos y apoyando en la comunicación.",
+                        "archetype": "empatico",
+                        "points": 10
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "question": "Cuando le asignas una tarea crítica a un colaborador, ¿qué sucede normalmente?",
+                "options": [
+                    {
+                        "text": "Les doy una visión general y confío en que encontrarán el camino creativo para resolverlo.",
+                        "archetype": "visionario",
+                        "points": 10
+                    },
+                    {
+                        "text": "Les entrego un proceso o paso a paso muy estructurado para asegurar que no fallen.",
+                        "archetype": "operativo",
+                        "points": 10
+                    },
+                    {
+                        "text": "Me aseguro de acompañarles de cerca, guiándoles emocionalmente para que ganen confianza.",
+                        "archetype": "empatico",
+                        "points": 10
+                    }
+                ]
+            },
+            {
+                "id": 3,
+                "question": "Si pudieras resolver un solo problema en tu negocio hoy mismo, ¿cuál elegirías?",
+                "options": [
+                    {
+                        "text": "Alinear a todo el equipo hacia una misma dirección y visión de crecimiento masivo.",
+                        "archetype": "visionario",
+                        "points": 10
+                    },
+                    {
+                        "text": "Lograr que el negocio opere de forma automatizada sin depender 100% de mi presencia diaria.",
+                        "archetype": "operativo",
+                        "points": 10
+                    },
+                    {
+                        "text": "Mejorar la cultura corporativa y retener el talento clave que se siente desgastado.",
+                        "archetype": "empatico",
+                        "points": 10
+                    }
+                ]
+            },
+            {
+                "id": 4,
+                "question": "A la hora de tomar una decisión arriesgada, ¿en qué te basas principalmente?",
+                "options": [
+                    {
+                        "text": "En mi intuición de mercado, oportunidades futuras y el impacto potencial a gran escala.",
+                        "archetype": "visionario",
+                        "points": 10
+                    },
+                    {
+                        "text": "En datos duros, métricas financieras y análisis de riesgos estructurados.",
+                        "archetype": "operativo",
+                        "points": 10
+                    },
+                    {
+                        "text": "En cómo afectará el bienestar, la motivación y el clima emocional de las personas involucradas.",
+                        "archetype": "empatico",
+                        "points": 10
+                    }
+                ]
+            },
+            {
+                "id": 5,
+                "question": "¿Qué te hace sentir que has tenido una semana sumamente exitosa?",
+                "options": [
+                    {
+                        "text": "Haber cerrado una nueva alianza o definir un hito estratégico clave para la empresa.",
+                        "archetype": "visionario",
+                        "points": 10
+                    },
+                    {
+                        "text": "Ver que los sistemas fluyeron sin errores y se cumplieron las metas de eficiencia operativa.",
+                        "archetype": "operativo",
+                        "points": 10
+                    },
+                    {
+                        "text": "Ver crecer a mi equipo, resolver tensiones y recibir un agradecimiento genuino de alguien a quien guié.",
+                        "archetype": "empatico",
+                        "points": 10
+                    }
+                ]
+            }
+        ],
+        "archetypes": {
+            "visionario": {
+                "title": "Líder Visionario",
+                "description": "Tienes una gran capacidad para ver el panorama general y proyectar el crecimiento a futuro, pero tu reto principal es no desconectarte de la ejecución táctica.",
+                "cta": "Agenda una sesión para estructurar tu salto estratégico."
+            },
+            "operativo": {
+                "title": "Líder Operativo",
+                "description": "Dominas el orden, los sistemas y la eficiencia, pero tu mayor cuello de botella es que el negocio depende 100% de ti para operar cada día.",
+                "cta": "Descubre cómo automatizar tus procesos de alta dirección."
+            },
+            "empatico": {
+                "title": "Líder Empático",
+                "description": "Construyes equipos unidos y una cultura sólida, aunque a veces el desgaste humano y la falta de límites operativos te restan velocidad.",
+                "cta": "Aprende a liderar con impacto sin sacrificar tu propia energía."
+            }
+        }
+    }
+}
