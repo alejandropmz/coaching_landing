@@ -51,7 +51,9 @@
   var step = 'welcome'; // welcome | question | calculating | email | result
   var questionIndex = 0;
   var scores = {}; // archetype key -> accumulated points
+  var answers = []; // chosen option index per question, in order
   var userEmail = '';
+  var isSending = false;
   var calcTimer = null;
   var OPTION_LABELS = ['A', 'B', 'C', 'D', 'E'];
 
@@ -69,7 +71,9 @@
     step = 'welcome';
     questionIndex = 0;
     scores = {};
+    answers = [];
     userEmail = '';
+    isSending = false;
     if (calcTimer) {
       clearTimeout(calcTimer);
       calcTimer = null;
@@ -217,6 +221,7 @@
     var q = quizData.questions[questionIndex];
     var opt = q.options[optionIndex];
     scores[opt.archetype] = (scores[opt.archetype] || 0) + opt.points;
+    answers.push(optionIndex);
 
     if (questionIndex < quizData.questions.length - 1) {
       questionIndex += 1;
@@ -254,20 +259,106 @@
           '<label for="quiz-email" class="block text-charcoal text-[11px] md:text-xs tracking-[0.2em] uppercase font-semibold mb-3">TU EMAIL</label>' +
           '<input type="email" id="quiz-email" name="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required ' +
             'class="w-full bg-transparent border-b border-charcoal/30 focus:border-gold text-charcoal placeholder:text-charcoal/40 text-base py-3 focus:outline-none transition-colors duration-300 mb-8">' +
-          '<button type="submit" class="w-full inline-flex items-center justify-center gap-2 bg-charcoal text-cream font-sans text-xs md:text-sm font-semibold tracking-[0.2em] uppercase px-8 py-4 transition-colors duration-300 hover:bg-gold hover:text-charcoal cursor-pointer">Ver mi resultado <span aria-hidden="true">→</span></button>' +
+          '<button type="submit" id="quiz-email-submit" class="w-full inline-flex items-center justify-center gap-2 bg-charcoal text-cream font-sans text-xs md:text-sm font-semibold tracking-[0.2em] uppercase px-8 py-4 transition-colors duration-300 hover:bg-gold hover:text-charcoal disabled:opacity-60 disabled:cursor-wait cursor-pointer">Ver mi resultado <span aria-hidden="true">→</span></button>' +
+          '<div id="quiz-email-status" class="min-h-[24px] mt-4 text-left font-sans text-sm" role="status" aria-live="polite"></div>' +
         '</form>' +
-        '<button type="button" id="quiz-skip" class="mt-6 text-charcoal hover:text-gold font-sans text-xs tracking-[0.2em] uppercase font-semibold border-b border-charcoal/40 hover:border-gold pb-1 transition-colors duration-300 focus:outline-none cursor-pointer">Saltar y ver mi resultado ahora</button>' +
+        '<button type="button" id="quiz-skip" class="mt-6 text-charcoal hover:text-gold font-sans text-xs tracking-[0.2em] uppercase font-semibold border-b border-charcoal/40 hover:border-gold pb-1 transition-colors duration-300 focus:outline-none disabled:opacity-60 disabled:cursor-wait cursor-pointer">Saltar y ver mi resultado ahora</button>' +
       '</div>';
 
     document.getElementById('quiz-email-form').addEventListener('submit', submitEmail);
-    document.getElementById('quiz-skip').addEventListener('click', showResult);
+    document.getElementById('quiz-skip').addEventListener('click', skipEmail);
+  }
+
+  function skipEmail() {
+    if (isSending) {
+      return;
+    }
+    showResult();
   }
 
   function submitEmail(e) {
     e.preventDefault();
+
+    if (isSending) {
+      return;
+    }
+
     var input = document.getElementById('quiz-email');
-    userEmail = input.value.trim();
-    showResult();
+    var email = input.value.trim();
+
+    if (!email) {
+      showEmailStatus('Por favor ingresa un correo válido.', true);
+      return;
+    }
+
+    userEmail = email;
+    setEmailSending(true);
+    showEmailStatus('', false);
+
+    var result = computeDetailedResult();
+
+    sendQuizResultsByEmail(email, result)
+      .then(function () {
+        setEmailSending(false);
+        showResult();
+      })
+      .catch(function () {
+        setEmailSending(false);
+        showEmailStatus('No pudimos enviar tu resultado. Revisa tu correo e inténtalo de nuevo, o salta este paso.', true);
+      });
+  }
+
+  function setEmailSending(sending) {
+    isSending = sending;
+
+    var submit = document.getElementById('quiz-email-submit');
+    var skip = document.getElementById('quiz-skip');
+
+    if (submit) {
+      submit.disabled = sending;
+      if (sending) {
+        submit.innerHTML =
+          '<span class="inline-block h-4 w-4 border-2 border-cream/30 border-t-cream animate-spin align-middle" aria-hidden="true"></span>' +
+          '<span>Enviando...</span>';
+      } else {
+        submit.innerHTML = 'Ver mi resultado <span aria-hidden="true">→</span>';
+      }
+    }
+
+    if (skip) {
+      skip.disabled = sending;
+    }
+  }
+
+  function showEmailStatus(message, isError) {
+    var status = document.getElementById('quiz-email-status');
+    if (!status) {
+      return;
+    }
+    status.textContent = message;
+    status.className = 'min-h-[24px] mt-4 text-left font-sans text-sm ' + (isError ? 'text-error' : 'text-charcoal');
+  }
+
+  function sendQuizResultsByEmail(email, result) {
+    return fetch('./api/send-quiz-results.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        result: result
+      })
+    }).then(function (res) {
+      return res.json().catch(function () {
+        return {};
+      }).then(function (data) {
+        if (!res.ok || data.error) {
+          throw new Error(data.error || ('HTTP ' + res.status));
+        }
+        return data;
+      });
+    });
   }
 
   // ----- Step 5: Result -----
@@ -294,8 +385,51 @@
     return bestArchetype;
   }
 
+  function computeDetailedResult() {
+    var bestKey = computeResult();
+    var keys = Object.keys(quizData.archetypes);
+
+    var scoreBreakdown = keys.map(function (key) {
+      return {
+        key: key,
+        title: quizData.archetypes[key].title,
+        points: scores[key] || 0
+      };
+    }).sort(function (a, b) {
+      return b.points - a.points;
+    });
+
+    var totalPoints = scoreBreakdown.reduce(function (sum, row) {
+      return sum + row.points;
+    }, 0);
+
+    var answersBreakdown = quizData.questions.map(function (q, i) {
+      var optionIndex = answers[i];
+      var selected = (typeof optionIndex === 'number' && q.options[optionIndex])
+        ? q.options[optionIndex]
+        : null;
+
+      return {
+        question: q.question,
+        answer: selected ? selected.text : null,
+        archetype: selected ? selected.archetype : null,
+        points: selected ? selected.points : 0
+      };
+    });
+
+    return {
+      key: bestKey,
+      archetype: quizData.archetypes[bestKey],
+      scores: scoreBreakdown,
+      answers: answersBreakdown,
+      totalPoints: totalPoints,
+      totalQuestions: quizData.questions.length
+    };
+  }
+
   function renderResult() {
-    var archetype = quizData.archetypes[computeResult()];
+    var result = computeDetailedResult();
+    var archetype = result.archetype;
 
     content.innerHTML =
       '<div class="p-8 sm:p-10 md:p-14 text-center">' +

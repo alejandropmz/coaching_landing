@@ -2,3 +2,5 @@ node_modules/
 tailwind.config.js
 .DS_Store
 Thumbs.db
+vendor/
+.env
