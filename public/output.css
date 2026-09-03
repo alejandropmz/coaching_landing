@@ -857,6 +857,9 @@
   .bg-cover {
     background-size: cover;
   }
+  .bg-\[center_right\] {
+    background-position: center right;
+  }
   .bg-center {
     background-position: center;
   }
@@ -1019,9 +1022,17 @@
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
   }
+  .tracking-\[0\.1em\] {
+    --tw-tracking: 0.1em;
+    letter-spacing: 0.1em;
+  }
   .tracking-\[0\.2em\] {
     --tw-tracking: 0.2em;
     letter-spacing: 0.2em;
+  }
+  .tracking-\[0\.10em\] {
+    --tw-tracking: 0.10em;
+    letter-spacing: 0.10em;
   }
   .tracking-\[0\.12em\] {
     --tw-tracking: 0.12em;
@@ -1151,6 +1162,11 @@
   }
   .brightness-200 {
     --tw-brightness: brightness(200%);
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .drop-shadow-\[0_1px_3px_rgba\(0\,0\,0\,0\.9\)\] {
+    --tw-drop-shadow-size: drop-shadow(0 1px 3px var(--tw-drop-shadow-color, rgba(0,0,0,0.9)));
+    --tw-drop-shadow: var(--tw-drop-shadow-size);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .grayscale {
@@ -1343,6 +1359,10 @@
     .sm\:text-5xl {
       font-size: var(--text-5xl);
       line-height: var(--tw-leading, var(--text-5xl--line-height));
+    }
+    .sm\:text-sm {
+      font-size: var(--text-sm);
+      line-height: var(--tw-leading, var(--text-sm--line-height));
     }
     .sm\:text-\[11px\] {
       font-size: 11px;
