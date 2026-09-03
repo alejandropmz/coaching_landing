@@ -230,9 +230,6 @@
   .inset-0 {
     inset: 0px;
   }
-  .inset-x-0 {
-    inset-inline: 0px;
-  }
   .inset-y-0 {
     inset-block: 0px;
   }
@@ -638,10 +635,6 @@
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
   }
-  .border-t-2 {
-    border-top-style: var(--tw-border-style);
-    border-top-width: 2px;
-  }
   .border-t-4 {
     border-top-style: var(--tw-border-style);
     border-top-width: 4px;
@@ -935,9 +928,6 @@
   }
   .py-5 {
     padding-block: calc(var(--spacing) * 5);
-  }
-  .py-7 {
-    padding-block: calc(var(--spacing) * 7);
   }
   .py-8 {
     padding-block: calc(var(--spacing) * 8);
@@ -1379,48 +1369,17 @@
     .sm\:grid-cols-2 {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    .sm\:grid-cols-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
     .sm\:flex-row {
       flex-direction: row;
     }
     .sm\:items-center {
       align-items: center;
     }
-    .sm\:border-r {
-      border-right-style: var(--tw-border-style);
-      border-right-width: 1px;
-    }
-    .sm\:border-b-0 {
-      border-bottom-style: var(--tw-border-style);
-      border-bottom-width: 0px;
-    }
-    .sm\:border-charcoal\/20 {
-      border-color: color-mix(in srgb, #1D1B19 20%, transparent);
-    }
-    @supports (color: color-mix(in lab, red, red)) {
-      .sm\:border-charcoal\/20 {
-        border-color: color-mix(in oklab, var(--color-charcoal) 20%, transparent);
-      }
-    }
     .sm\:p-6 {
       padding: calc(var(--spacing) * 6);
     }
     .sm\:p-10 {
       padding: calc(var(--spacing) * 10);
-    }
-    .sm\:px-8 {
-      padding-inline: calc(var(--spacing) * 8);
-    }
-    .sm\:pr-8 {
-      padding-right: calc(var(--spacing) * 8);
-    }
-    .sm\:pl-8 {
-      padding-left: calc(var(--spacing) * 8);
-    }
-    .sm\:text-left {
-      text-align: left;
     }
     .sm\:text-5xl {
       font-size: var(--text-5xl);
@@ -1463,9 +1422,6 @@
     }
     .md\:mt-16 {
       margin-top: calc(var(--spacing) * 16);
-    }
-    .md\:mt-24 {
-      margin-top: calc(var(--spacing) * 24);
     }
     .md\:mb-0 {
       margin-bottom: 0px;
@@ -1583,9 +1539,6 @@
     .md\:p-14 {
       padding: calc(var(--spacing) * 14);
     }
-    .md\:px-8 {
-      padding-inline: calc(var(--spacing) * 8);
-    }
     .md\:px-12 {
       padding-inline: calc(var(--spacing) * 12);
     }
@@ -1594,9 +1547,6 @@
     }
     .md\:py-4 {
       padding-block: calc(var(--spacing) * 4);
-    }
-    .md\:py-10 {
-      padding-block: calc(var(--spacing) * 10);
     }
     .md\:py-14 {
       padding-block: calc(var(--spacing) * 14);
@@ -1656,10 +1606,6 @@
     .md\:text-sm {
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
-    }
-    .md\:text-xl {
-      font-size: var(--text-xl);
-      line-height: var(--tw-leading, var(--text-xl--line-height));
     }
     .md\:text-xs {
       font-size: var(--text-xs);
