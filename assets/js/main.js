@@ -340,7 +340,7 @@
   }
 
   function sendQuizResultsByEmail(email, result) {
-    return fetch('./api/send-quiz-results.php', {
+    return fetch('/.netlify/functions/send-quiz-results', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

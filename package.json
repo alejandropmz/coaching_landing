@@ -16,6 +16,15 @@
     "tailwindcss": "^4.3.3"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.3.3"
-  }
+    "@tailwindcss/cli": "^4.3.3",
+    "resend": "^6.26.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alejandropmz/coaching_landing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alejandropmz/coaching_landing/issues"
+  },
+  "homepage": "https://github.com/alejandropmz/coaching_landing#readme"
 }
