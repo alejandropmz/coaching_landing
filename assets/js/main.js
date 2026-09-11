@@ -464,3 +464,38 @@
     }
   });
 })();
+
+/* ============================================================
+   FLOATING ACTION BUTTONS — BACK TO TOP
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var backToTop = document.getElementById('back-to-top');
+
+  if (!backToTop) {
+    return;
+  }
+
+  // ----- Back to top: hidden near the top, revealed after 300px -----
+  function updateBackToTop() {
+    var shouldShow = (window.scrollY || window.pageYOffset) > 300;
+
+    backToTop.classList.toggle('invisible', !shouldShow);
+    backToTop.classList.toggle('opacity-0', !shouldShow);
+    backToTop.classList.toggle('translate-y-4', !shouldShow);
+    backToTop.classList.toggle('pointer-events-none', !shouldShow);
+
+    backToTop.classList.toggle('visible', shouldShow);
+    backToTop.classList.toggle('opacity-100', shouldShow);
+    backToTop.classList.toggle('translate-y-0', shouldShow);
+    backToTop.classList.toggle('pointer-events-auto', shouldShow);
+  }
+
+  window.addEventListener('scroll', updateBackToTop, { passive: true });
+  updateBackToTop();
+
+  backToTop.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
