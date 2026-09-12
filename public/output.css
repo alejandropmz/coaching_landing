@@ -56,7 +56,6 @@
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --animate-spin: spin 1s linear infinite;
     --animate-bounce: bounce 1s infinite;
-    --blur-sm: 8px;
     --blur-md: 12px;
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -425,9 +424,6 @@
   }
   .h-12 {
     height: calc(var(--spacing) * 12);
-  }
-  .h-16 {
-    height: calc(var(--spacing) * 16);
   }
   .h-24 {
     height: calc(var(--spacing) * 24);
@@ -1555,6 +1551,9 @@
     }
     .md\:h-12 {
       height: calc(var(--spacing) * 12);
+    }
+    .md\:h-14 {
+      height: calc(var(--spacing) * 14);
     }
     .md\:h-36 {
       height: calc(var(--spacing) * 36);
