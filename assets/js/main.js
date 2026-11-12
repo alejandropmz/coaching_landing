@@ -3,7 +3,7 @@
 
     if (!('IntersectionObserver' in window)) {
         items.forEach(function (el) {
-            el.classList.remove('opacity-0', 'translate-y-6', 'translate-y-8');
+            el.classList.remove('opacity-0', 'translate-y-8');
             el.classList.add('opacity-100', 'translate-y-0');
         });
         return;
@@ -12,12 +12,17 @@
     var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
             if (entry.isIntersecting) {
-                entry.target.classList.remove('opacity-0', 'translate-y-6', 'translate-y-8');
+                // Cuando el elemento entra en la pantalla (scroll hacia abajo o al llegar a él)
+                entry.target.classList.remove('opacity-0', 'translate-y-8');
                 entry.target.classList.add('opacity-100', 'translate-y-0');
-                observer.unobserve(entry.target);
+            } else {
+                // Cuando el elemento sale de la pantalla por arriba (hacemos scroll hacia arriba)
+                // Se vuelve a ocultar para repetir la animación al volver a bajar
+                entry.target.classList.remove('opacity-100', 'translate-y-0');
+                entry.target.classList.add('opacity-0', 'translate-y-8');
             }
         });
-    }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
     items.forEach(function (el) { observer.observe(el); });
 })();
@@ -138,11 +143,11 @@
   function renderWelcome() {
     content.innerHTML =
       '<div class="p-8 sm:p-10 md:p-14 text-center">' +
-        '<p class="text-deep-gold text-[11px] md:text-xs tracking-[0.25em] uppercase font-semibold mb-6">DIAGNÓSTICO EJECUTIVO</p>' +
-        '<div class="w-10 h-[2px] bg-deep-gold mx-auto mb-6 md:mb-8"></div>' +
+        '<p class="text-gold text-[11px] md:text-xs tracking-[0.25em] uppercase font-semibold mb-6">QUIZ EXCLUSIVO</p>' +
+        '<div class="w-10 h-[2px] bg-gold mx-auto mb-6 md:mb-8"></div>' +
         '<h2 class="font-bodoni font-medium text-2xl md:text-4xl text-charcoal leading-tight tracking-tight mb-5">Descubre tu esencia de liderazgo</h2>' +
-        '<p class="font-sans text-sm md:text-base text-muted leading-relaxed mb-8 md:mb-10">Identifica los pilares de tu marca personal y cómo proyectar una autoridad magnética en tu industria.</p>' +
-        '<button type="button" id="quiz-begin" class="inline-block bg-charcoal text-cream font-sans text-xs md:text-sm font-semibold tracking-[0.2em] uppercase px-8 py-4 transition-colors duration-300 hover:bg-gold hover:text-charcoal cursor-pointer">Comenzar Diagnóstico</button>' +
+        '<p class="font-sans text-sm md:text-base text-[#4B4640] leading-relaxed mb-8 md:mb-10">Identifica los pilares de tu marca personal y cómo proyectar una autoridad magnética en tu industria.</p>' +
+        '<button type="button" id="quiz-begin" class="inline-block bg-charcoal text-cream font-sans text-xs md:text-sm font-semibold tracking-[0.2em] uppercase px-8 py-4 transition-colors duration-300 hover:bg-gold hover:text-charcoal cursor-pointer">Comenzar Quiz</button>' +
       '</div>';
 
     document.getElementById('quiz-begin').addEventListener('click', startQuiz);
@@ -164,9 +169,9 @@
   function renderError(message) {
     content.innerHTML =
       '<div class="p-8 sm:p-10 md:p-14 text-center">' +
-        '<p class="text-deep-gold text-[11px] md:text-xs tracking-[0.25em] uppercase font-semibold mb-6">UPS, ALGO SALIÓ MAL</p>' +
-        '<div class="w-10 h-[2px] bg-deep-gold mx-auto mb-6"></div>' +
-        '<p class="font-sans text-sm md:text-base text-muted leading-relaxed mb-8">' + escapeHtml(message) + '</p>' +
+        '<p class="text-gold text-[11px] md:text-xs tracking-[0.25em] uppercase font-semibold mb-6">UPS, ALGO SALIÓ MAL</p>' +
+        '<div class="w-10 h-[2px] bg-gold mx-auto mb-6"></div>' +
+        '<p class="font-sans text-sm md:text-base text-[#4B4640] leading-relaxed mb-8">' + escapeHtml(message) + '</p>' +
         '<button type="button" id="quiz-retry" class="inline-block bg-charcoal text-cream font-sans text-xs md:text-sm font-semibold tracking-[0.2em] uppercase px-8 py-4 transition-colors duration-300 hover:bg-gold hover:text-charcoal cursor-pointer">Intentar de nuevo</button>' +
       '</div>';
 
@@ -181,11 +186,11 @@
 
     html += '<div class="p-8 sm:p-10 md:p-14">';
 
-    html += '<p class="text-deep-gold text-[11px] md:text-xs tracking-[0.2em] uppercase font-semibold mb-6">Pregunta ' + (questionIndex + 1) + ' de ' + total + '</p>';
+    html += '<p class="text-gold text-[11px] md:text-xs tracking-[0.2em] uppercase font-semibold mb-6">Pregunta ' + (questionIndex + 1) + ' de ' + total + '</p>';
 
     html += '<div class="flex gap-2 mb-8">';
     for (var i = 0; i < total; i++) {
-      html += '<div class="h-[2px] flex-1 ' + (i <= questionIndex ? 'bg-deep-gold' : 'bg-charcoal/15') + '"></div>';
+      html += '<div class="h-[2px] flex-1 ' + (i <= questionIndex ? 'bg-gold' : 'bg-charcoal/15') + '"></div>';
     }
     html += '</div>';
 
@@ -193,8 +198,8 @@
 
     html += '<div class="space-y-4">';
     q.options.forEach(function (opt, i) {
-      html += '<button type="button" data-option="' + i + '" class="quiz-option group w-full text-left border border-charcoal/25 hover:border-charcoal hover:bg-tertiary focus:border-charcoal focus:outline-none p-5 md:p-6 transition-colors duration-300 cursor-pointer">';
-      html += '<span class="block text-deep-gold text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-semibold mb-2">OPCIÓN ' + OPTION_LABELS[i] + '</span>';
+      html += '<button type="button" data-option="' + i + '" class="quiz-option w-full text-left border border-charcoal/20 hover:border-gold focus:border-gold focus:outline-none p-5 md:p-6 transition-colors duration-300 cursor-pointer">';
+      html += '<span class="block text-gold text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-semibold mb-2">OPCIÓN ' + OPTION_LABELS[i] + '</span>';
       html += '<span class="block font-sans text-sm md:text-base text-charcoal leading-relaxed">' + escapeHtml(opt.text) + '</span>';
       html += '</button>';
     });
@@ -236,9 +241,9 @@
   function renderCalculating() {
     content.innerHTML =
       '<div class="p-8 sm:p-10 md:p-14 text-center">' +
-        '<div class="w-12 h-12 border-2 border-charcoal/20 border-t-deep-gold animate-spin mx-auto"></div>' +
+        '<div class="w-12 h-12 border-2 border-charcoal/20 border-t-gold animate-spin mx-auto"></div>' +
         '<p class="font-bodoni font-medium text-xl md:text-2xl text-charcoal leading-tight mt-8">Calculando tu perfil...</p>' +
-        '<p class="font-sans text-sm md:text-base text-muted leading-relaxed mt-4">Analizando tus respuestas para revelar tu arquetipo de liderazgo dominante.</p>' +
+        '<p class="font-sans text-sm md:text-base text-[#4B4640] leading-relaxed mt-4">Analizando tus respuestas para revelar tu arquetipo de liderazgo dominante.</p>' +
       '</div>';
   }
 
@@ -246,18 +251,18 @@
   function renderEmail() {
     content.innerHTML =
       '<div class="p-8 sm:p-10 md:p-14 text-center">' +
-        '<p class="text-deep-gold text-[11px] md:text-xs tracking-[0.25em] uppercase font-semibold mb-6">PASO FINAL</p>' +
-        '<div class="w-10 h-[2px] bg-deep-gold mx-auto mb-6"></div>' +
+        '<p class="text-gold text-[11px] md:text-xs tracking-[0.25em] uppercase font-semibold mb-6">PASO FINAL</p>' +
+        '<div class="w-10 h-[2px] bg-gold mx-auto mb-6"></div>' +
         '<h2 class="font-bodoni font-medium text-2xl md:text-3xl text-charcoal leading-tight tracking-tight mb-5">Recibe tu desglose completo de liderazgo</h2>' +
-        '<p class="font-sans text-sm md:text-base text-muted leading-relaxed mb-8">Déjanos tu correo y te enviaremos el análisis detallado de tu arquetipo con recomendaciones personalizadas.</p>' +
+        '<p class="font-sans text-sm md:text-base text-[#4B4640] leading-relaxed mb-8">Déjanos tu correo y te enviaremos el análisis detallado de tu arquetipo con recomendaciones personalizadas.</p>' +
         '<form id="quiz-email-form" class="text-left">' +
           '<label for="quiz-email" class="block text-charcoal text-[11px] md:text-xs tracking-[0.2em] uppercase font-semibold mb-3">TU EMAIL</label>' +
           '<input type="email" id="quiz-email" name="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required ' +
-            'class="w-full bg-transparent border-b border-charcoal focus:border-b-2 focus:border-deep-gold text-charcoal placeholder:text-muted/50 text-base py-3 focus:outline-none transition-all duration-200 mb-8">' +
+            'class="w-full bg-transparent border-b border-charcoal/30 focus:border-gold text-charcoal placeholder:text-charcoal/40 text-base py-3 focus:outline-none transition-colors duration-300 mb-8">' +
           '<button type="submit" id="quiz-email-submit" class="w-full inline-flex items-center justify-center gap-2 bg-charcoal text-cream font-sans text-xs md:text-sm font-semibold tracking-[0.2em] uppercase px-8 py-4 transition-colors duration-300 hover:bg-gold hover:text-charcoal disabled:opacity-60 disabled:cursor-wait cursor-pointer">Ver mi resultado <span aria-hidden="true">→</span></button>' +
           '<div id="quiz-email-status" class="min-h-[24px] mt-4 text-left font-sans text-sm" role="status" aria-live="polite"></div>' +
         '</form>' +
-        '<button type="button" id="quiz-skip" class="mt-6 text-charcoal hover:text-deep-gold font-sans text-xs tracking-[0.2em] uppercase font-semibold border-b border-charcoal hover:border-deep-gold pb-1 transition-colors duration-300 focus:outline-none disabled:opacity-60 disabled:cursor-wait cursor-pointer">Saltar y ver mi resultado ahora</button>' +
+        '<button type="button" id="quiz-skip" class="mt-6 text-charcoal hover:text-gold font-sans text-xs tracking-[0.2em] uppercase font-semibold border-b border-charcoal/40 hover:border-gold pb-1 transition-colors duration-300 focus:outline-none disabled:opacity-60 disabled:cursor-wait cursor-pointer">Saltar y ver mi resultado ahora</button>' +
       '</div>';
 
     document.getElementById('quiz-email-form').addEventListener('submit', submitEmail);
@@ -428,10 +433,10 @@
 
     content.innerHTML =
       '<div class="p-8 sm:p-10 md:p-14 text-center">' +
-        '<p class="text-deep-gold text-[11px] md:text-xs tracking-[0.25em] uppercase font-semibold mb-6">TU ARQUETIPO DE LIDERAZGO</p>' +
-        '<div class="w-10 h-[2px] bg-deep-gold mx-auto mb-6"></div>' +
+        '<p class="text-gold text-[11px] md:text-xs tracking-[0.25em] uppercase font-semibold mb-6">TU ARQUETIPO DE LIDERAZGO</p>' +
+        '<div class="w-10 h-[2px] bg-gold mx-auto mb-6"></div>' +
         '<h2 class="font-bodoni font-medium text-3xl md:text-4xl text-charcoal leading-tight tracking-tight mb-5">' + escapeHtml(archetype.title) + '</h2>' +
-        '<p class="font-sans text-sm md:text-base text-muted leading-relaxed mb-6">' + escapeHtml(archetype.description) + '</p>' +
+        '<p class="font-sans text-sm md:text-base text-[#4B4640] leading-relaxed mb-6">' + escapeHtml(archetype.description) + '</p>' +
         '<p class="font-sans text-sm md:text-base text-deep-gold leading-relaxed mb-8">' + escapeHtml(archetype.cta) + '</p>' +
         '<a href="#agendar" id="quiz-result-cta" class="inline-flex items-center justify-center gap-2 bg-charcoal text-cream font-sans text-xs md:text-sm font-semibold tracking-[0.2em] uppercase px-8 py-4 transition-colors duration-300 hover:bg-gold hover:text-charcoal">Agendar mi sesión <span aria-hidden="true">→</span></a>' +
       '</div>';
